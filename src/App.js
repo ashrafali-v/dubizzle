@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-
+import { Badge} from 'react-bootstrap';
 function App() {
   useEffect(() => {
     //fetchItems();
   }, []);
   const [users, setUsers] = useState([]);
+  const [forkArray, setforkArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
   const fetchForks = async (id) =>{
     const data = await fetch(`https://api.github.com/gists/${id}`);
     const forkArray = await data.json();
+    setforkArray(forkArray);
   }
   const fetchItems = async () => {
     const data = await fetch(`https://api.github.com/users/${userName}/gists`);
@@ -38,8 +40,9 @@ function App() {
         </form>
       {users.map((item,i) => (
       <div key={item.id}>
-        <span>{item.url}</span>{Object.keys(item.files).map(itemFile =>(
-          <span> --- {item.files[itemFile].language} </span>
+        <span>{item.url}</span> &nbsp;{Object.keys(item.files).map(itemFile =>(
+          <Badge variant="secondary">{item.files[itemFile].language}  </Badge>
+
         ))}
         {/* <span>{forkArray[i].username}</span> */}
       </div>
