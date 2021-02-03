@@ -17,7 +17,7 @@ function App() {
   const fetchItems = async () => {
     const data = await fetch(`https://api.github.com/users/${userName}/gists`);
     const userArray = await data.json();
-    userArray.forEach(element => {
+    await userArray.forEach(element => {
       fetchForks(element.id)
     });
     setUsers(userArray);
@@ -44,7 +44,11 @@ function App() {
           <Badge variant="secondary">{item.files[itemFile].language}  </Badge>
 
         ))}
-        {/* <span>{forkArray[i].username}</span> */}
+        {forkArray.length > 0 ?
+        <h2>
+          {forkArray[i].username}
+        </h2>:<span>No item Found</span>
+      }
       </div>
     ))}
     </div>
